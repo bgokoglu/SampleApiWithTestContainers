@@ -1,7 +1,6 @@
 using Common.Api.ErrorHandling;
 using Common.Core.Repository;
 using Common.Core.SystemClock;
-using Microsoft.EntityFrameworkCore;
 using SampleApiWithTestContainers.Product;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSystemClock();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+//product services
+builder.Services.AddProductValidations();
 builder.Services.AddProductRepository();
 builder.Services.AddProductDatabase(builder.Configuration);
 

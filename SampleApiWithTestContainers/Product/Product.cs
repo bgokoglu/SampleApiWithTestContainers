@@ -1,10 +1,12 @@
+using Common.Core.BusinessRules;
+
 namespace SampleApiWithTestContainers.Product;
 
 public sealed class Product
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public DateTimeOffset CreatedDtTm { get; init; }
+    public DateTimeOffset CreatedDtTm { get; set; }
     
     private Product(Guid id, string name, DateTimeOffset createdDtTm)
     {
@@ -12,7 +14,10 @@ public sealed class Product
         Name = name;
         CreatedDtTm = createdDtTm;
     }
-
-    public static Product Create(string name, DateTimeOffset createdDtTm) =>
-        new(Guid.NewGuid(), name, createdDtTm);
+    
+    public static Product Create(string name, DateTimeOffset createdDtTm, string? existingName)
+    {
+        BusinessRuleValidator.Validate(new ProductCanBeCreatedOnlyForNonExistingRule(name, existingName));
+        return new Product(Guid.NewGuid(), name, createdDtTm);
+    }
 }

@@ -1,9 +1,20 @@
+using System.Reflection;
+using Common.Api.Validation.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace SampleApiWithTestContainers.Product;
 
 public static class ProductModule
 {
+    private static Assembly CurrentModule => typeof(ProductRequest).Assembly;
+    
+    public static IServiceCollection AddProductValidations(this IServiceCollection services)
+    {
+        services.AddRequestsValidations(CurrentModule);
+
+        return services;
+    }
+    
     public static IServiceCollection AddProductRepository(this IServiceCollection services)
     {
         services.AddScoped<IProductRepository, ProductRepository>();
