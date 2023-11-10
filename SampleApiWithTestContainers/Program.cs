@@ -1,12 +1,13 @@
+using Common.Core.Repository;
+using Common.Core.SystemClock;
 using Microsoft.EntityFrameworkCore;
-using SampleApiWithTestContainers.Infrastructure;
 using SampleApiWithTestContainers.Product;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
+builder.Services.AddSystemClock();
 
 builder.Services.AddProductRepository();
 builder.Services.AddProductDatabase(builder.Configuration);

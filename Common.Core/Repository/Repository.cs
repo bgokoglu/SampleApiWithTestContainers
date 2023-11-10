@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace SampleApiWithTestContainers.Infrastructure;
+namespace Common.Core.Repository;
 
-// Repositories/Repository.cs
 public class Repository<T> : IRepository<T> where T : class
 {
     private readonly DbContext _context;

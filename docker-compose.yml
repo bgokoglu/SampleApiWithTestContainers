@@ -9,7 +9,7 @@ services:
     image: product_api:1.0
     container_name: product_api.v1
     build:
-      context: ./SampleApiWithTestContainers
+      context: .
       dockerfile: Dockerfile
     ports:
       - "5001:80"
@@ -19,7 +19,7 @@ services:
       product_db:
         condition: service_healthy
 #    environment:
-#      ConnectionStrings__DefaultConnection: "Host=product_db;Database=productapi;Username=myuser;Password=mypwd"
+#      ConnectionStrings__DefaultConnection: "Host=product_db;Database=productapi;Username=myusr;Password=mypwd"
   
   product_db:
     image: postgres:14.3

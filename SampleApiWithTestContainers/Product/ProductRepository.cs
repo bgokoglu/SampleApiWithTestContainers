@@ -1,4 +1,4 @@
-using SampleApiWithTestContainers.Infrastructure;
+using Common.Core.Repository;
 
 namespace SampleApiWithTestContainers.Product;
 

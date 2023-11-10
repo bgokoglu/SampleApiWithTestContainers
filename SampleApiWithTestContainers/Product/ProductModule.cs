@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SampleApiWithTestContainers.Product;
 
-public static class ProductDataAccess
+public static class ProductModule
 {
     public static IServiceCollection AddProductRepository(this IServiceCollection services)
     {

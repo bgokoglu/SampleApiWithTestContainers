@@ -1,4 +1,4 @@
-namespace SampleApiWithTestContainers.Infrastructure;
+namespace Common.Core.Repository;
 
 // Interfaces/IRepository.cs
 public interface IRepository<T>
