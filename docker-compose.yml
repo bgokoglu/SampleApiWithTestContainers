@@ -9,7 +9,7 @@ services:
     image: product_api:1.0
     container_name: product_api.v1
     build:
-      context: .
+      context: ./SampleApiWithTestContainers
       dockerfile: Dockerfile
     ports:
       - "5001:80"
