@@ -6,12 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
-builder.Services.AddDbContextFactory<ProductDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddDbContext<ProductDbContext>(options =>
-        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")), optionsLifetime: ServiceLifetime.Singleton);
+
+builder.Services.AddProductRepository();
+builder.Services.AddProductDatabase(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -30,15 +28,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGet("/", async context => { await context.Response.WriteAsync("Hello, Minimal API!"); });
-
 app.RegisterProductEndpoints();
 
-//Database initialization
-using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-{
-    var context = serviceScope.ServiceProvider.GetService<ProductDbContext>();
-    app.Logger.LogInformation(context.Database.GetConnectionString());
-    context.Database.Migrate();
-}
+app.UseProductDatabase();
 
 app.Run();

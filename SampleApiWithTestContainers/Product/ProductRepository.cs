@@ -4,7 +4,7 @@ namespace SampleApiWithTestContainers.Product;
 
 public class ProductRepository : Repository<Product>, IProductRepository
 {
-    public ProductRepository(ProductDbContext context) : base(context)
+    public ProductRepository(ProductPersistence context) : base(context)
     {
     }
 }

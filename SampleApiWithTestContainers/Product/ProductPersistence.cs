@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SampleApiWithTestContainers.Product;
 
-public sealed class ProductDbContext : DbContext
+public sealed class ProductPersistence : DbContext
 {
-    public ProductDbContext(DbContextOptions<ProductDbContext> options) : base(options) { }
+    public ProductPersistence(DbContextOptions<ProductPersistence> options) : base(options) { }
 
     public DbSet<Product> Products => Set<Product>();
     

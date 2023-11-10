@@ -10,7 +10,7 @@ using SampleApiWithTestContainers.Product;
 
 namespace SampleApiWithTestContainers.Migrations
 {
-    [DbContext(typeof(ProductDbContext))]
+    [DbContext(typeof(ProductPersistence))]
     partial class ProductDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

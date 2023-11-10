@@ -11,7 +11,7 @@ using SampleApiWithTestContainers.Product;
 
 namespace SampleApiWithTestContainers.Migrations
 {
-    [DbContext(typeof(ProductDbContext))]
+    [DbContext(typeof(ProductPersistence))]
     [Migration("20231110020523_InitialCreate")]
     partial class InitialCreate
     {
