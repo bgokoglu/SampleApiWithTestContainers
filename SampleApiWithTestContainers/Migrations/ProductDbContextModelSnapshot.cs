@@ -29,6 +29,9 @@ namespace SampleApiWithTestContainers.Migrations
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("NEWID()");
 
+                    b.Property<DateTimeOffset>("CreatedDtTm")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");

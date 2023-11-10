@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Authentication;
+using Common.Api.Validation.Requests;
 using Microsoft.OpenApi.Models;
+using Common.Core.SystemClock;
 
 namespace SampleApiWithTestContainers.Product;
 
@@ -57,10 +58,11 @@ public static class ProductEndPoints
         app.MapPost(ProductApiPaths.Create,
                 async (ProductRequest request, IProductRepository repository, ISystemClock clock) =>
             {
-                var product = Product.Create(request.Name, clock.UtcNow);
+                var product = Product.Create(request.Name, clock.Now);
                 await repository.Add(product);
                 return Results.Created($"/{ProductApiPaths.GetById}/{product.Id}", product.Id);
             })
+            .ValidateRequest<ProductRequestValidator>()
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {
                 Summary = "Creates a product",
