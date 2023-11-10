@@ -1,0 +1,27 @@
+@base_url = http://localhost:5001
+
+# Get all products
+GET {{base_url}}/api/product
+
+# Get product by id (replace {id} with an actual product id)
+GET {{base_url}}/api/product/{id}
+
+# Create a new product
+POST {{base_url}}/api/product
+Content-Type: application/json
+
+{
+    "Name": "New Product"
+}
+
+# Update product by id (replace {id} with an actual product id)
+PUT {{base_url}}/api/product/{id}
+Content-Type: application/json
+
+{
+    "Id": "{id}",
+    "Name": "Updated Product"
+}
+
+# Delete product by id (replace {id} with an actual product id)
+DELETE {{base_url}}/api/product/{id}

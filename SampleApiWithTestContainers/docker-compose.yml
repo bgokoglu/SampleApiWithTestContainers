@@ -1,0 +1,39 @@
+version: '3.9'
+
+networks:
+  product_api_network:
+    driver: bridge
+    
+services:
+  product_api:
+    image: product_api
+    container_name: product_api.v1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5001:80"
+    networks: 
+      - product_api_network
+    depends_on:
+      - product_db
+#        condition: service_healthy
+#    environment:
+#      ConnectionStrings__DefaultConnection: "Host=product_db;Database=productapi;Username=myuser;Password=mypwd"
+  
+  product_db:
+    image: postgres:14.3
+    container_name: product_db.v1
+    environment:
+      POSTGRES_DB: productapi
+      POSTGRES_USER: myusr
+      POSTGRES_PASSWORD: mypwd
+    ports:
+      - "5432:5432"
+    networks:
+      - product_api_network
+#    healthcheck:
+#      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
