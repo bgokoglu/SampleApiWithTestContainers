@@ -1,6 +1,6 @@
 using Common.Core;
 
-namespace SampleApiWithTestContainers.Product;
+namespace SampleApiWithTestContainers.Products;
 
 public static class ProductApiPaths
 {

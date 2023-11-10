@@ -1,6 +1,6 @@
 using Common.Core.Repository;
 
-namespace SampleApiWithTestContainers.Product;
+namespace SampleApiWithTestContainers.Products;
 
 public interface IProductRepository : IRepository<Product>
 {

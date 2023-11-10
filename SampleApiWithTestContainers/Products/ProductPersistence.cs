@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace SampleApiWithTestContainers.Product;
+namespace SampleApiWithTestContainers.Products;
 
 public sealed class ProductPersistence : DbContext
 {

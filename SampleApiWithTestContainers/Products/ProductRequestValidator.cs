@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace SampleApiWithTestContainers.Product;
+namespace SampleApiWithTestContainers.Products;
 
 public sealed class ProductRequestValidator : AbstractValidator<ProductRequest>
 {

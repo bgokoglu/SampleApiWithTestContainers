@@ -1,8 +1,8 @@
 using Common.Api.Validation.Requests;
-using Microsoft.OpenApi.Models;
 using Common.Core.SystemClock;
+using Microsoft.OpenApi.Models;
 
-namespace SampleApiWithTestContainers.Product;
+namespace SampleApiWithTestContainers.Products;
 
 public static class ProductEndPoints
 {
@@ -11,20 +11,20 @@ public static class ProductEndPoints
         app.MapGet(ProductApiPaths.GetAll, async (IProductRepository repository) =>
             {
                 var products = await repository.GetAll();
-                return Results.Ok(products);
+                return Results.Ok(products.ToList().ConvertAll(p => p.MapToProductResponse()));
             })
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {
                 Summary = "Returns all products",
                 Description = "This endpoint is used to retrieve all existing passes.",
             })
-            .Produces<IEnumerable<Product>>()
+            .Produces<IEnumerable<ProductResponse>>()
             .Produces(StatusCodes.Status500InternalServerError);
 
         app.MapGet(ProductApiPaths.GetById, async (Guid id, IProductRepository repository) =>
             {
                 var product = await repository.GetById(id);
-                return product is not null ? Results.Ok(product) : Results.NotFound();
+                return product is not null ? Results.Ok(product.MapToProductResponse()) : Results.NotFound();
             })
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {

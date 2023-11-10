@@ -2,7 +2,7 @@ using System.Reflection;
 using Common.Api.Validation.Requests;
 using Microsoft.EntityFrameworkCore;
 
-namespace SampleApiWithTestContainers.Product;
+namespace SampleApiWithTestContainers.Products;
 
 public static class ProductModule
 {
@@ -24,8 +24,8 @@ public static class ProductModule
     
     public static IServiceCollection AddProductDatabase(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContextFactory<ProductPersistence>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+        // services.AddDbContextFactory<ProductPersistence>(options =>
+        //     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         services.AddDbContext<ProductPersistence>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")),
             optionsLifetime: ServiceLifetime.Singleton);

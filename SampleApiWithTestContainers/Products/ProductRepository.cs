@@ -1,7 +1,7 @@
 using Common.Core.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace SampleApiWithTestContainers.Product;
+namespace SampleApiWithTestContainers.Products;
 
 public class ProductRepository : Repository<Product>, IProductRepository
 {

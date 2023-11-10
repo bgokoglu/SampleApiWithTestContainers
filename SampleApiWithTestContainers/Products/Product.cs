@@ -1,6 +1,7 @@
+using System.Runtime.CompilerServices;
 using Common.Core.BusinessRules;
 
-namespace SampleApiWithTestContainers.Product;
+namespace SampleApiWithTestContainers.Products;
 
 public sealed class Product
 {
@@ -19,5 +20,15 @@ public sealed class Product
     {
         BusinessRuleValidator.Validate(new ProductCanBeCreatedOnlyForNonExistingRule(name, existingName));
         return new Product(Guid.NewGuid(), name, createdDtTm);
+    }
+
+    public ProductResponse MapToProductResponse()
+    {
+        return new ProductResponse
+        {
+            Id = Id,
+            Name = Name,
+            CreatedDtTm = CreatedDtTm
+        };
     }
 }

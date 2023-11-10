@@ -1,7 +1,7 @@
 using Common.Api.ErrorHandling;
 using Common.Core.Repository;
 using Common.Core.SystemClock;
-using SampleApiWithTestContainers.Product;
+using SampleApiWithTestContainers.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,3 +38,5 @@ app.RegisterProductEndpoints();
 app.UseProductDatabase();
 
 app.Run();
+
+public partial class Program { }

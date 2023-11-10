@@ -1,4 +1,4 @@
-namespace SampleApiWithTestContainers.Product;
+namespace SampleApiWithTestContainers.Products;
 
 public class ProductRequest
 {

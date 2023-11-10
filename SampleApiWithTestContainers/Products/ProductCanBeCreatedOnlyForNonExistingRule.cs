@@ -1,6 +1,6 @@
 using Common.Core.BusinessRules;
 
-namespace SampleApiWithTestContainers.Product;
+namespace SampleApiWithTestContainers.Products;
 
 public sealed class ProductCanBeCreatedOnlyForNonExistingRule : IBusinessRule
 {
