@@ -27,8 +27,9 @@ public static class ProductModule
         // services.AddDbContextFactory<ProductPersistence>(options =>
         //     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         services.AddDbContext<ProductPersistence>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")),
-            optionsLifetime: ServiceLifetime.Singleton);
+        {
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+        }, optionsLifetime: ServiceLifetime.Singleton);
 
         return services;
     }
