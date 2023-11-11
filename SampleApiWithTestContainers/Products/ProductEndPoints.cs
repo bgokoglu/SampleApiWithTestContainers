@@ -1,5 +1,6 @@
 using Common.Api.Validation.Requests;
 using Common.Core.SystemClock;
+using Common.Infrastructure.Events.EventBus;
 using Microsoft.OpenApi.Models;
 
 namespace SampleApiWithTestContainers.Products;
@@ -36,11 +37,15 @@ public static class ProductEndPoints
             .Produces(StatusCodes.Status500InternalServerError);
 
         app.MapPost(ProductApiPaths.Create,
-                async (ProductRequest request, IProductRepository repository, ISystemClock clock) =>
+                async (ProductRequest request, IProductRepository repository, ISystemClock systemClock, IEventBus eventBus) =>
                 {
                     var existingProduct = await repository.GetExistingProductByName(request.Name);
-                    var newProduct = Product.Create(request.Name, clock.Now, existingProduct?.Name);
+                    var newProduct = Product.Create(request.Name, systemClock.Now, existingProduct?.Name);
                     await repository.Add(newProduct);
+                    
+                    var productCreatedEvent = ProductCreatedEvent.Create(newProduct.Id);
+                    await eventBus.PublishAsync(productCreatedEvent);
+                    
                     return Results.Created($"/{ProductApiPaths.GetById}/{newProduct.Id}", newProduct.Id);
                 })
             .ValidateRequest<ProductRequest>()
@@ -54,14 +59,14 @@ public static class ProductEndPoints
             .Produces(StatusCodes.Status500InternalServerError);
 
         app.MapPut(ProductApiPaths.Update,
-                async (Guid id, ProductRequest request, IProductRepository repository, ISystemClock clock) =>
+                async (Guid id, ProductRequest request, IProductRepository repository, ISystemClock systemClock) =>
                 {
                     var existingProduct = await repository.GetById(id);
 
                     if (existingProduct != null)
                     {
                         existingProduct.Name = request.Name;
-                        existingProduct.CreatedDtTm = clock.Now;
+                        existingProduct.CreatedDtTm = systemClock.Now;
                         await repository.Update(existingProduct);
                         Results.NoContent();
                     }

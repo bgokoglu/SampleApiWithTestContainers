@@ -1,13 +1,18 @@
+using System.Reflection;
 using Common.Api.ErrorHandling;
 using Common.Core.Repository;
 using Common.Core.SystemClock;
+using Common.Infrastructure;
+using Common.Infrastructure.Mediator;
 using SampleApiWithTestContainers.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSystemClock();
+builder.Services.AddCommonInfrastructure();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddMediator(Assembly.GetExecutingAssembly());
 
 //product services
 builder.Services.AddProductValidations();

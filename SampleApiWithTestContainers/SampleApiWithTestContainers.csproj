@@ -22,6 +22,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Common.Core\Common.Core.csproj" />
         <ProjectReference Include="..\Common.Api\Common.Api.csproj" />
+        <ProjectReference Include="..\Common.Infrastructure\Common.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
