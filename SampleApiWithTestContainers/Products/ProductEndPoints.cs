@@ -1,3 +1,4 @@
+using Common.Api.Authentication;
 using Common.Api.Validation.Requests;
 using Common.Core.SystemClock;
 using Common.Infrastructure.Events.EventBus;
@@ -37,17 +38,19 @@ public static class ProductEndPoints
             .Produces(StatusCodes.Status500InternalServerError);
 
         app.MapPost(ProductApiPaths.Create,
-                async (ProductRequest request, IProductRepository repository, ISystemClock systemClock, IEventBus eventBus) =>
+                async (ProductRequest request, IProductRepository repository, ISystemClock systemClock,
+                    IEventBus eventBus) =>
                 {
                     var existingProduct = await repository.GetExistingProductByName(request.Name);
                     var newProduct = Product.Create(request.Name, systemClock.Now, existingProduct?.Name);
                     await repository.Add(newProduct);
-                    
+
                     var productCreatedEvent = ProductCreatedEvent.Create(newProduct.Id);
                     await eventBus.PublishAsync(productCreatedEvent);
-                    
+
                     return Results.Created($"/{ProductApiPaths.GetById}/{newProduct.Id}", newProduct.Id);
                 })
+            .AddEndpointFilter<ApiKeyAuthenticationEndpointFilter>()
             .ValidateRequest<ProductRequest>()
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {
@@ -63,16 +66,17 @@ public static class ProductEndPoints
                 {
                     var existingProduct = await repository.GetById(id);
 
-                    if (existingProduct != null)
-                    {
-                        existingProduct.Name = request.Name;
-                        existingProduct.CreatedDtTm = systemClock.Now;
-                        await repository.Update(existingProduct);
-                        Results.NoContent();
-                    }
+                    if (existingProduct is null)
+                        return Results.NotFound();
 
-                    Results.NotFound();
+                    existingProduct.Name = request.Name;
+                    existingProduct.CreatedDtTm = systemClock.Now;
+                    await repository.Update(existingProduct);
+
+                    return Results.NoContent();
                 })
+            .AddEndpointFilter<ApiKeyAuthenticationEndpointFilter>()
+            .ValidateRequest<ProductRequest>()
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {
                 Summary = "Updates product",
@@ -86,14 +90,13 @@ public static class ProductEndPoints
             {
                 var product = await repository.GetById(id);
 
-                if (product != null)
-                {
-                    await repository.Delete(id);
-                    Results.NoContent();
-                }
+                if (product is null)
+                    return Results.NotFound();
 
-                Results.NotFound();
+                await repository.Delete(id);
+                return Results.NoContent();
             })
+            .AddEndpointFilter<ApiKeyAuthenticationEndpointFilter>()
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {
                 Summary = "Deletes product",

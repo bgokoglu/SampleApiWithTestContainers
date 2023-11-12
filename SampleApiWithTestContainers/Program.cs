@@ -1,4 +1,5 @@
 using System.Reflection;
+using Common.Api.Authentication;
 using Common.Api.ErrorHandling;
 using Common.Core.Repository;
 using Common.Core.SystemClock;
@@ -9,6 +10,7 @@ using SampleApiWithTestContainers.Products;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddApiAuthorization();
 builder.Services.AddSystemClock();
 builder.Services.AddCommonInfrastructure();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
