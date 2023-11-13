@@ -5,6 +5,7 @@ using Common.Core.Repository;
 using Common.Core.SystemClock;
 using Common.Infrastructure;
 using Common.Infrastructure.Mediator;
+using Microsoft.OpenApi.Models;
 using SampleApiWithTestContainers.Products;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,7 +24,35 @@ builder.Services.AddProductDatabase(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Product API", Version = "v1" });
+
+    // Define the security scheme
+    options.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+    {
+        Description = "API key needed to access the endpoints. Include it in the 'X-Api-Key' header.",
+        Name = "X-Api-Key",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    // Define the security requirement
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "ApiKey"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
