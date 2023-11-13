@@ -10,6 +10,7 @@ GET {{base_url}}/{{url_path}}/{id}
 ### Create a new product
 POST {{base_url}}/{{url_path}}
 Content-Type: application/json
+X-Api-Key: AtCK9ZfzuLrMQMkyZ49suthegy2h5TPAT9ymxdyFphD5WUsvh092tvE2IjFH69RP51fvucsFtBrJ1Na10M02VxFDQBa65OIbtkrMmYdUvFO986SaMWgg0YpBYuFFlHRO
 
 {
     "Name": "New Product"
@@ -18,6 +19,7 @@ Content-Type: application/json
 ### Update product by id (replace {id} with an actual product id)
 PUT {{base_url}}/{{url_path}}/{id}
 Content-Type: application/json
+X-Api-Key: AtCK9ZfzuLrMQMkyZ49suthegy2h5TPAT9ymxdyFphD5WUsvh092tvE2IjFH69RP51fvucsFtBrJ1Na10M02VxFDQBa65OIbtkrMmYdUvFO986SaMWgg0YpBYuFFlHRO
 
 {
     "Id": "{id}",
@@ -26,3 +28,4 @@ Content-Type: application/json
 
 ### Delete product by id (replace {id} with an actual product id)
 DELETE {{base_url}}/{{url_path}}/{id}
+X-Api-Key: AtCK9ZfzuLrMQMkyZ49suthegy2h5TPAT9ymxdyFphD5WUsvh092tvE2IjFH69RP51fvucsFtBrJ1Na10M02VxFDQBa65OIbtkrMmYdUvFO986SaMWgg0YpBYuFFlHRO

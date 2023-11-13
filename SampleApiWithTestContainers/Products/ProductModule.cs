@@ -1,5 +1,6 @@
 using System.Reflection;
 using Common.Api.Validation.Requests;
+using Common.Core.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace SampleApiWithTestContainers.Products;
@@ -26,9 +27,17 @@ public static class ProductModule
     {
         // services.AddDbContextFactory<ProductPersistence>(options =>
         //     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+        var databaseConfigOptions = configuration.GetSection(DatabaseConfigOptions.Key).Get<DatabaseConfigOptions>();
+        
         services.AddDbContext<ProductPersistence>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"), action =>
+            {
+                action.CommandTimeout(databaseConfigOptions.CommandTimeout);
+            });
+            options.EnableDetailedErrors(databaseConfigOptions.EnableDetailedErrors);
+            options.EnableSensitiveDataLogging(databaseConfigOptions.EnableSensitiveDataLogging);
         }, optionsLifetime: ServiceLifetime.Singleton);
 
         return services;

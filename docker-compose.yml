@@ -15,13 +15,12 @@ services:
       - "5001:80"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      # ConnectionStrings__DefaultConnection: "Host=product_db;Database=productapi;Username=myusr;Password=mypwd"
     networks: 
       - product_api_network
     depends_on:
       product_db:
-        condition: service_healthy
-#    environment:
-#      ConnectionStrings__DefaultConnection: "Host=product_db;Database=productapi;Username=myusr;Password=mypwd"
+        condition: service_healthy    
   
   product_db:
     image: postgres:14.3
