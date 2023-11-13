@@ -2,7 +2,6 @@ using System.Net;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Common.Api.Validation.Requests;
 
@@ -26,7 +25,6 @@ public sealed class RequestValidationApiFilter<TRequestToValidate> : IEndpointFi
         }
 
         var errors = validationResult.ToDictionary();
-        return Results.ValidationProblem(errors,
-            statusCode: (int)HttpStatusCode.BadRequest);
+        return Results.ValidationProblem(errors, statusCode: (int)HttpStatusCode.BadRequest);
     }
 }
