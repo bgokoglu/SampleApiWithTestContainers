@@ -2,6 +2,8 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using FluentAssertions;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using SampleApi.Products.Core;
 using SampleApi.Products.IntegrationTests.Common;
 
@@ -23,7 +25,12 @@ public class ProductTests : BaseIntegrationTest
     {
         // Arrange
         var client = _factory.CreateClient();
-
+        var configuration = _factory.Services.GetRequiredService<IConfiguration>();
+        
+        // Get API key from configuration
+        var apiKey = configuration["Authentication:ApiKey"];
+        client.DefaultRequestHeaders.Add("X-Api-Key", apiKey);
+        
         // Act
         // insert into db what you want to assert
         var postResponse = await client.PostAsJsonAsync("api/products", new ProductRequest { Name = productName});
