@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SampleApi.Common.Api\SampleApi.Common.Api.csproj" />
+      <ProjectReference Include="..\SampleApi.Common.Core\SampleApi.Common.Core.csproj" />
+      <ProjectReference Include="..\SampleApi.Common.Infrastructure\SampleApi.Common.Infrastructure.csproj" />
+      <ProjectReference Include="..\SampleApi.Products.Core\SampleApi.Products.Core.csproj" />
+      <ProjectReference Include="..\SampleApi.Products.Infrastructure\SampleApi.Products.Infrastructure.csproj" />
+      <ProjectReference Include="..\SampleApi.Products.IntegrationEvents\SampleApi.Products.IntegrationEvents.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13" />
+      <PackageReference Include="Microsoft.OpenApi" Version="1.6.10" />
+    </ItemGroup>
+
+</Project>

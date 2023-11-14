@@ -6,19 +6,19 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 # Copy the project file
-COPY ["SampleApiWithTestContainers/SampleApiWithTestContainers.csproj", "SampleApiWithTestContainers/"]
+COPY ["SampleApi/SampleApi.csproj", "SampleApi/"]
 # Restore NuGet packages
-RUN dotnet restore "SampleApiWithTestContainers/SampleApiWithTestContainers.csproj"
+RUN dotnet restore "SampleApi/SampleApi.csproj"
 # Copy the entire solution
 COPY . .
-WORKDIR "/src/SampleApiWithTestContainers"
+WORKDIR "/src/SampleApi"
 # Build the application
-RUN dotnet build "SampleApiWithTestContainers.csproj" -c Release -o /app/build
+RUN dotnet build "SampleApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "SampleApiWithTestContainers.csproj" -c Release -o /app/publish
+RUN dotnet publish "SampleApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SampleApiWithTestContainers.dll"]
+ENTRYPOINT ["dotnet", "SampleApi.dll"]
