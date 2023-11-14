@@ -22,7 +22,7 @@ public static class ProductEndPoints
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {
                 Summary = "Returns all products",
-                Description = "This endpoint is used to retrieve all existing passes."
+                Description = "This endpoint is used to retrieve all existing products."
             })
             .Produces<IEnumerable<ProductResponse>>()
             .Produces(StatusCodes.Status500InternalServerError);
