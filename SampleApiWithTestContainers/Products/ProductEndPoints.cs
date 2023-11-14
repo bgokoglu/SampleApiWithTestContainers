@@ -18,7 +18,7 @@ public static class ProductEndPoints
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {
                 Summary = "Returns all products",
-                Description = "This endpoint is used to retrieve all existing passes.",
+                Description = "This endpoint is used to retrieve all existing passes."
             })
             .Produces<IEnumerable<ProductResponse>>()
             .Produces(StatusCodes.Status500InternalServerError);
@@ -31,7 +31,7 @@ public static class ProductEndPoints
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {
                 Summary = "Returns product",
-                Description = "This endpoint is used to get the product.",
+                Description = "This endpoint is used to get the product."
             })
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
@@ -55,7 +55,7 @@ public static class ProductEndPoints
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {
                 Summary = "Creates a product",
-                Description = "This endpoint is used to create a product.",
+                Description = "This endpoint is used to create a product."
             })
             .Produces(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status409Conflict)
@@ -80,7 +80,7 @@ public static class ProductEndPoints
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {
                 Summary = "Updates product",
-                Description = "This endpoint is used to update the product.",
+                Description = "This endpoint is used to update the product."
             })
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
@@ -100,7 +100,7 @@ public static class ProductEndPoints
             .WithOpenApi(operation => new OpenApiOperation(operation)
             {
                 Summary = "Deletes product",
-                Description = "This endpoint is used to delete the product.",
+                Description = "This endpoint is used to delete the product."
             })
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)

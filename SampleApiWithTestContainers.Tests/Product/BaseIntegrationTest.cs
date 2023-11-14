@@ -4,8 +4,7 @@ using SampleApiWithTestContainers.Products;
 namespace SampleApiWithTestContainers.Tests.Product;
 
 public abstract class BaseIntegrationTest
-    : IClassFixture<IntegrationTestWebAppFactory>,
-        IDisposable
+    : IClassFixture<IntegrationTestWebAppFactory>, IDisposable
 {
     private readonly IServiceScope _scope;
     private readonly ProductPersistence _dbContext;
@@ -18,7 +17,9 @@ public abstract class BaseIntegrationTest
 
     public void Dispose()
     {
-        _scope?.Dispose();
-        _dbContext?.Dispose();
+        _scope.Dispose();
+        _dbContext.Dispose();
+        
+        GC.SuppressFinalize(this);
     }
 }

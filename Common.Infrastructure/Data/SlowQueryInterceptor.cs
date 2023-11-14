@@ -17,7 +17,7 @@ public class SlowQueryInterceptor : DbCommandInterceptor
     private const int SlowQueryThreshold = 50; //milliseconds
     
     public override ValueTask<DbDataReader> ReaderExecutedAsync(DbCommand command, CommandExecutedEventData eventData, DbDataReader result,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
         if (eventData.Duration.TotalMilliseconds > SlowQueryThreshold)
         {

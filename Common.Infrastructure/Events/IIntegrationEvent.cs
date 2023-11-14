@@ -1,4 +1,3 @@
-using MediatR;
 using MediatR.ParallelPublisher;
 
 namespace Common.Infrastructure.Events;

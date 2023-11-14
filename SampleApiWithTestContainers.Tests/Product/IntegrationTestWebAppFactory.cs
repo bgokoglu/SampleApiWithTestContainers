@@ -13,9 +13,9 @@ public class IntegrationTestWebAppFactory
         IAsyncLifetime
 {
     private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
-        .WithDatabase("testdb")
-        .WithUsername("testusr")
-        .WithPassword("testpwd")
+        .WithDatabase("test_db")
+        .WithUsername("test_usr")
+        .WithPassword("test_pwd")
         .Build();
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
