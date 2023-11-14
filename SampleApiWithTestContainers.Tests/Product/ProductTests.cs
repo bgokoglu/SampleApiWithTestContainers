@@ -53,7 +53,7 @@ public class ProductTests : BaseIntegrationTest
         
         // Assert that the product properties are equal to what was posted
         productResponse.Should().NotBeNull();
-        productResponse.Id.Should().Be(productId);
+        productResponse!.Id.Should().Be(productId);
         productResponse.Name.Should().Be(productName);
     }
 }

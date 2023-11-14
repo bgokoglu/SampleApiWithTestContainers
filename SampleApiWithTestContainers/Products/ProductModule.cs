@@ -34,9 +34,9 @@ public static class ProductModule
         {
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"), action =>
             {
-                action.CommandTimeout(databaseConfigOptions.CommandTimeout);
+                action.CommandTimeout(databaseConfigOptions!.CommandTimeout);
             });
-            options.EnableDetailedErrors(databaseConfigOptions.EnableDetailedErrors);
+            options.EnableDetailedErrors(databaseConfigOptions!.EnableDetailedErrors);
             options.EnableSensitiveDataLogging(databaseConfigOptions.EnableSensitiveDataLogging);
         }, optionsLifetime: ServiceLifetime.Singleton);
 

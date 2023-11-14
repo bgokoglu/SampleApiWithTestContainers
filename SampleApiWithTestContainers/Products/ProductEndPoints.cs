@@ -41,8 +41,8 @@ public static class ProductEndPoints
                 async (ProductRequest request, IProductRepository repository, ISystemClock systemClock,
                     IEventBus eventBus) =>
                 {
-                    var existingProduct = await repository.GetExistingProductByName(request.Name);
-                    var newProduct = Product.Create(request.Name, systemClock.Now, existingProduct?.Name);
+                    var existingProduct = await repository.GetExistingProductByName(request.Name!);
+                    var newProduct = Product.Create(request.Name!, systemClock.Now, existingProduct?.Name);
                     await repository.Add(newProduct);
 
                     var productCreatedEvent = ProductCreatedEvent.Create(newProduct.Id);
@@ -69,7 +69,7 @@ public static class ProductEndPoints
                     if (existingProduct is null)
                         return Results.NotFound();
 
-                    existingProduct.Name = request.Name;
+                    existingProduct.Name = request.Name!;
                     existingProduct.CreatedDtTm = systemClock.Now;
                     await repository.Update(existingProduct);
 

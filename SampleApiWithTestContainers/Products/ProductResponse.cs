@@ -8,7 +8,7 @@ public sealed class ProductResponse
     public Guid Id { get; set; }
     
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
     
     [JsonPropertyName("createdDtTm")]
     public DateTimeOffset CreatedDtTm { get; set; }

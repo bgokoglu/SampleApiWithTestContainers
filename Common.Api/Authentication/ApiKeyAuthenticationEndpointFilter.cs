@@ -15,7 +15,7 @@ public class ApiKeyAuthenticationEndpointFilter : IEndpointFilter
     
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
-        string apiKey = context.HttpContext.Request.Headers[ApiKeyHeaderName];
+        string? apiKey = context.HttpContext.Request.Headers[ApiKeyHeaderName];
 
         if (!_apiKeyValidator.IsValid(apiKey))
         {

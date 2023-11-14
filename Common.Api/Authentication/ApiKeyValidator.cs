@@ -11,7 +11,7 @@ public class ApiKeyValidator : IApiKeyValidator
         _configuration = configuration;
     }
     
-    public bool IsValid(string apiKey)
+    public bool IsValid(string? apiKey)
     {
         if (string.IsNullOrEmpty(apiKey))
             return false;
