@@ -1,9 +1,4 @@
-```shell
-> dotnet new webapi -n ProductApi
-> cd ProductApi
-```
-
-when the project setup is finished
+to create a db migration
 
 ```shell
 > dotnet ef migrations add InitialCreate
@@ -16,5 +11,3 @@ to run the project
 > docker-compose up --build
 > docker-compose down
 ```
-
-
