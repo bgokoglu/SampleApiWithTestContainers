@@ -1,9 +1,5 @@
 version: '3.9'
 
-networks:
-  product_api_network:
-    driver: bridge
-    
 services:
   product_api:
     image: product_api:1.0
@@ -23,7 +19,7 @@ services:
         condition: service_healthy    
   
   product_db:
-    image: postgres:14.3
+    image: postgres:latest
     container_name: product_db.v1
     restart: always
     environment:
@@ -34,8 +30,17 @@ services:
       - "5432:5432"
     networks:
       - product_api_network
+    volumes:
+      - product_data:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
       interval: 5s
       timeout: 5s
       retries: 5
+
+networks:
+  product_api_network:
+    driver: bridge
+
+volumes:
+  product_data:
