@@ -1,7 +1,10 @@
+using DotNetCore.CAP;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
 using SampleApi.Common.Infrastructure.Events;
 using SampleApi.Common.Infrastructure.Events.EventBus;
+using SampleApi.Common.Infrastructure.Events.EventBus.Cap;
 
 namespace SampleApi.Common.Infrastructure.Data;
 
@@ -9,13 +12,17 @@ public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : DbCon
 {
     private readonly TContext _context;
     private readonly IEventBus _eventBus;
+    private readonly ICapPublisher _capPublisher;
     private IDbContextTransaction? _transaction;
     private readonly List<IIntegrationEvent> _events;
+    private readonly ILogger<UnitOfWork<TContext>> _logger;
 
-    public UnitOfWork(TContext context, IEventBus eventBus)
+    public UnitOfWork(TContext context, IEventBus eventBus, ICapPublisher capPublisher, ILogger<UnitOfWork<TContext>> logger)
     {
         _context = context;
         _eventBus = eventBus;
+        _capPublisher = capPublisher;
+        _logger = logger;
         _events = new List<IIntegrationEvent>();
     }
 
@@ -47,7 +54,7 @@ public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : DbCon
                 await BeginTransactionAsync(cancellationToken);
             
             result = await _context.SaveChangesAsync(cancellationToken);
-            PublishEvents();
+            await PublishEvents();
             await CommitTransactionAsync(cancellationToken);
         }
 
@@ -68,11 +75,14 @@ public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : DbCon
         GC.SuppressFinalize(this);
     }
 
-    private void PublishEvents()
+    private async Task PublishEvents()
     {
         foreach (var integrationEvent in _events)
         {
-            _eventBus.PublishAsync(integrationEvent);
+            _logger.LogInformation("Publishing event: {Name}", nameof(integrationEvent));
+            await _eventBus.PublishAsync(integrationEvent);
+            await _capPublisher.PublishAsync(CapEventBusEventName.ProductCreatedEvent, integrationEvent);
+            _logger.LogInformation("Published event: {Name}", nameof(integrationEvent));
         }
 
         _events.Clear();

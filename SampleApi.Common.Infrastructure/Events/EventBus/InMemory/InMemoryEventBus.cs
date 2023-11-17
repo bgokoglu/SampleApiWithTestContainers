@@ -17,10 +17,6 @@ internal sealed class InMemoryEventBus : IEventBus
     public async Task PublishAsync<TEvent>(TEvent @event, CancellationToken cancellationToken = default)
         where TEvent : IIntegrationEvent
     {
-        _logger.LogInformation("Publishing event {Val}", typeof(TEvent));
-        
         await _mediator.Publish(@event, cancellationToken);
-
-        _logger.LogInformation("Published event {Val}", typeof(TEvent));
     }
 }

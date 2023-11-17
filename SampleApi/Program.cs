@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddApiAuthorization();
 builder.Services.AddSystemClock();
-builder.Services.AddCommonInfrastructure();
+builder.Services.AddCommonInfrastructure(builder.Configuration);
 
 //product services
 builder.Services.AddProducts(builder.Configuration, "Products");
