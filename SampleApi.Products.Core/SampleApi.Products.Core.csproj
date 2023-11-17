@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SampleApi.Common.Core\SampleApi.Common.Core.csproj" />
+      <ProjectReference Include="..\SampleApi.Common.Infrastructure\SampleApi.Common.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,4 +1,4 @@
-using SampleApi.Common.Core.Repository;
+using SampleApi.Common.Infrastructure.Data.Repository;
 
 namespace SampleApi.Products.Core;
 

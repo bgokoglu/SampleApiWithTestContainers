@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SampleApi.Common.Api.Validation.Requests;
 using SampleApi.Common.Core.Configuration;
+using SampleApi.Common.Infrastructure.Data;
 using SampleApi.Products.Core;
 using SampleApi.Products.Infrastructure.Database.Repositories;
 
@@ -44,6 +45,8 @@ public static class DatabaseModule
             options.EnableDetailedErrors(databaseConfigOptions!.EnableDetailedErrors);
             options.EnableSensitiveDataLogging(databaseConfigOptions.EnableSensitiveDataLogging);
         }, optionsLifetime: ServiceLifetime.Singleton);
+        
+        services.AddScoped<IUnitOfWork<ProductPersistence>, UnitOfWork<ProductPersistence>>();
 
         return services;
     }

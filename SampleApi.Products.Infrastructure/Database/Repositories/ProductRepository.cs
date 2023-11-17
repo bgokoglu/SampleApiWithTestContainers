@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SampleApi.Common.Core.Repository;
+using SampleApi.Common.Infrastructure.Data.Repository;
 using SampleApi.Products.Core;
 
 namespace SampleApi.Products.Infrastructure.Database.Repositories;
