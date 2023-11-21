@@ -24,7 +24,7 @@ public sealed class ExceptionMiddleware
         }
     }
 
-    private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
+    private static Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         context.Response.ContentType = ContentType;
 
@@ -51,7 +51,7 @@ public sealed class ExceptionMiddleware
 
         var result = JsonSerializer.Serialize(new ExceptionResponseMessage(statusCode, message));
 
-        await context.Response.WriteAsync(result);
+        return context.Response.WriteAsync(result);
     }
 }
 

@@ -44,8 +44,8 @@ public class IntegrationTestWebAppFactory
         await dbContext.Database.MigrateAsync();
     }
 
-    public new async Task DisposeAsync()
+    public new Task DisposeAsync()
     {
-        await _dbContainer.StopAsync();
+        return _dbContainer.StopAsync();
     }
 }
